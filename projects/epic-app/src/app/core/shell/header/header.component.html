@@ -1,0 +1,7 @@
+<div style="background: red">
+  <h1>HEADER</h1>
+  <h1 *ngIf="isLoading$ | async">LOADING...</h1>
+</div>
+<main>
+  <router-outlet></router-outlet>
+</main>
