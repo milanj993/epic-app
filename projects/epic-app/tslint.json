@@ -12,6 +12,7 @@
       "element",
       "milan",
       "kebab-case"
-    ]
+    ],
+    "no-inferrable-types": false
   }
 }

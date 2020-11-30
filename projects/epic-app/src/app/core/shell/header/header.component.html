@@ -1,6 +1,16 @@
 <div style="background: red">
   <h1>HEADER</h1>
   <h1 *ngIf="isLoading$ | async">LOADING...</h1>
+  <ng-container *ngIf="(isAuthenticated$ | async); else unauthenticated">
+    <h4>
+      LOGGED IN
+    </h4>
+  </ng-container>
+  <ng-template #unauthenticated>
+    <h4>
+      NOT LOGGED IN
+    </h4>
+  </ng-template>
 </div>
 <main>
   <router-outlet></router-outlet>

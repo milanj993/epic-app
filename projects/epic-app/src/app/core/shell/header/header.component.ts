@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+
 import {Store} from '@ngrx/store';
-import * as fromApp from '../../../app.reducer';
+
 import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
+
+import * as fromRoot from '../../../app.reducer';
+import * as UI from '../../../shared/store/ui/ui.actions';
+import * as AUTH from '../../../shared/store/auth/auth.actions';
 
 @Component({
   selector: 'milan-header',
@@ -12,15 +16,19 @@ import {map} from 'rxjs/operators';
 export class HeaderComponent implements OnInit {
 
   isLoading$: Observable<boolean> = of(false);
+  isAuthenticated$: Observable<boolean> = of(false);
 
-  constructor(private store: Store<{ui: fromApp.State}>) { }
+  constructor(private store: Store<fromRoot.State>) { }
 
   ngOnInit(): void {
-    this.store.dispatch({type: 'START_LOADING'});
+    this.store.dispatch(new UI.StartLoading());
+    this.store.dispatch(new AUTH.Unauthenticate());
     setTimeout(() => {
-      this.store.dispatch({type: 'STOP_LOADING'});
+      this.store.dispatch(new UI.StopLoading());
+      this.store.dispatch(new AUTH.Authenticate());
     }, 5000);
-    // this.isLoading$ = this.store.pipe(map(state => state.ui.isLoading));
+    this.isLoading$ = this.store.select(fromRoot.getIsLoading);
+    this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
   }
 
 }
