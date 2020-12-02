@@ -15,14 +15,13 @@ import * as AUTH from '../../../shared/store/auth/auth.actions';
 })
 export class HeaderComponent implements OnInit {
 
-  isLoading$: Observable<boolean> = of(false);
-  isAuthenticated$: Observable<boolean> = of(false);
+  isLoading$: Observable<boolean> | undefined;
+  isAuthenticated$: Observable<boolean> | undefined;
 
   constructor(private store: Store<fromRoot.State>) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new UI.StartLoading());
-    this.store.dispatch(new AUTH.Unauthenticate());
+    // this.store.dispatch(new UI.StartLoading());
     setTimeout(() => {
       this.store.dispatch(new UI.StopLoading());
       this.store.dispatch(new AUTH.Authenticate());
